@@ -1,0 +1,231 @@
+{
+  "datasets": [
+    {
+      "name": "dataset1",
+      "displayName": "quotes",
+      "queryLines": [
+        "SELECT * FROM lrcatalog.agentic_underwriting.quotes"
+      ]
+    },
+    {
+      "name": "357d30bf",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        ""
+      ]
+    },
+    {
+      "name": "de8d7156",
+      "displayName": "uk_postcodes",
+      "queryLines": [
+        "SELECT \n",
+        "    q.quote_id,\n",
+        "    q.postcode,\n",
+        "    p.lat,\n",
+        "    p.long\n",
+        "FROM lrcatalog.agentic_underwriting.quotes q\n",
+        "JOIN lrcatalog.agentic_underwriting.uk_postcodes p\n",
+        "    ON q.postcode = p.pcd"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "page1",
+      "displayName": "New Page",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_chart1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "de8d7156",
+                  "fields": [
+                    {
+                      "name": "quote_id",
+                      "expression": "`quote_id`"
+                    },
+                    {
+                      "name": "lat",
+                      "expression": "`lat`"
+                    },
+                    {
+                      "name": "long",
+                      "expression": "`long`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "symbol-map",
+              "encodings": {
+                "coordinates": {
+                  "latitude": {
+                    "fieldName": "lat",
+                    "displayName": "lat"
+                  },
+                  "longitude": {
+                    "fieldName": "long",
+                    "displayName": "long"
+                  }
+                },
+                "color": {
+                  "fieldName": "quote_id",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "displayName": "quote_id"
+                }
+              },
+              "mark": {
+                "opacity": 0.54
+              },
+              "frame": {
+                "title": "Geographical Distribution of quotes",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 10
+          }
+        },
+        {
+          "widget": {
+            "name": "text_box1",
+            "multilineTextboxSpec": {
+              "lines": [
+                "\n",
+                "# Dashboard for quotes table\n",
+                "\n",
+                "\n",
+                "The widget to the right of this one allows you to generate a chart based on this dataset using natural language. Click the widget to start typing a description of the chart you'd like to see. Alternatively, you can edit any selected widget using the controls in the right panel.\n",
+                "\n",
+                "You can also edit, copy, or delete any widget on the canvas.\n",
+                "    "
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "table1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "postcode",
+                      "expression": "`postcode`"
+                    },
+                    {
+                      "name": "count(quote_id)",
+                      "expression": "COUNT(`quote_id`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "postcode",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "postcode"
+                },
+                "y": {
+                  "fieldName": "count(quote_id)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Count of quote_id"
+                }
+              },
+              "frame": {
+                "title": "Top 10 Postcodes by Quote Count",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "2f218176",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "de8d7156",
+                  "fields": [
+                    {
+                      "name": "count(quote_id)",
+                      "expression": "COUNT(`quote_id`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(quote_id)",
+                  "displayName": "Count of quote_id"
+                }
+              },
+              "frame": {
+                "title": "Total Quotes",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    }
+  }
+}
