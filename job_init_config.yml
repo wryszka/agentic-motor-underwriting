@@ -1,0 +1,51 @@
+# LR Agentic Underwriting Job Configuration
+job_name: "Motor Underwriting Agent"
+description: "Agentic underwriting pipeline for motor insurance quotes"
+max_concurrent_runs: 4
+timeout_seconds: 3600
+
+# Notebook configuration
+notebook_path_template: "/Workspace/Users/{user}/{repo_name}/2. Agentic Underwriting Pipeline"
+
+# Default parameters
+default_parameters:
+  catalog: "lrcatalog"
+  schema: "agentic_underwriting"
+  quote_id: "R9999"
+
+# Cluster configuration
+cluster:
+  spark_version: "13.3.x-scala2.12"
+  node_type_id: "i3.xlarge"
+  driver_node_type_id: "i3.xlarge"
+  num_workers: 0
+  spark_conf:
+    "spark.databricks.cluster.profile": "singleNode"
+    "spark.master": "local[*]"
+  
+  # Libraries to install
+  libraries:
+    - pypi: "databricks-agents"
+    - pypi: "databricks-openai"
+    - pypi: "databricks-langchain"
+    - pypi: "mlflow"
+    - pypi: "databricks-sql-connector"
+  
+  custom_tags:
+    ResourceClass: "SingleNode"
+    Project: "AgenticUnderwriting"
+
+# Job settings
+queue:
+  enabled: true
+
+# Task settings
+task:
+  task_key: "agent_pipeline_task"
+  timeout_seconds: 1800
+
+# Notification settings
+email_notifications:
+  on_failure: true
+  on_success: false
+  no_alert_for_skipped_runs: true
